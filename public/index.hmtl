@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light"> <!-- Mencegah Dark Mode aneh -->
+    <meta name="color-scheme" content="light"> <!-- Mencegah Dark Mode merusak tampilan -->
     <title>Formulir Pemesanan - PrangArt Studios</title>
+    <!-- Menggunakan font modern dari Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,11 +21,20 @@
             <!-- SECTION 1: PEMBUKA -->
             <div class="form-step active" id="step-1">
                 <h3>Selamat Datang</h3>
-                <p>Apakah Anda tertarik/membawa proses produksi musik Anda menggunakan karya tari sama dengan PrangArt Studios?</p>
-                <label><input type="radio" name="tertarik" value="Ya" required onchange="toggleSection('ya')"> Ya</label>
-                <label><input type="radio" name="tertarik" value="Tidak" onchange="toggleSection('tidak')"> Tidak</label>
+                <p class="desc-text">Apakah Anda tertarik/membawa proses produksi musik Anda menggunakan karya tari sama dengan PrangArt Studios?</p>
                 
-                <div id="pesan-tidak" style="display:none; color:#d32f2f; margin-top:15px; font-weight:bold;">
+                <div class="radio-group">
+                    <label class="custom-radio">
+                        <input type="radio" name="tertarik" value="Ya" required onchange="toggleSection('ya')"> 
+                        <span class="checkmark"></span> Ya, Tertarik
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="tertarik" value="Tidak" onchange="toggleSection('tidak')"> 
+                        <span class="checkmark"></span> Tidak
+                    </label>
+                </div>
+                
+                <div id="pesan-tidak" style="display:none; color:#d32f2f; margin-top:15px; font-weight:500;">
                     Terima kasih atas waktunya. Formulir berhenti di sini.
                 </div>
 
@@ -35,54 +46,81 @@
             <!-- SECTION 2: DATA DIRI & KARYA -->
             <div class="form-step" id="step-2" style="display:none;">
                 <h3>Data Pemesan & Karya</h3>
-                <label>Nama Lengkap *</label>
-                <input type="text" id="nama" required>
+                
+                <div class="input-group">
+                    <label>Nama Lengkap *</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+                </div>
 
-                <label>Nama Sanggar / Komunitas / Instansi / Individu</label>
-                <input type="text" id="sanggar">
+                <div class="input-group">
+                    <label>Nama Sanggar / Komunitas / Instansi</label>
+                    <input type="text" id="sanggar" placeholder="Opsional">
+                </div>
 
-                <label>Kota / Provinsi *</label>
-                <input type="text" id="kota" required>
+                <div class="input-group">
+                    <label>Kota / Provinsi *</label>
+                    <input type="text" id="kota" placeholder="Contoh: Samarinda" required>
+                </div>
 
-                <label>Nomor WhatsApp Aktif *</label>
-                <input type="tel" id="wa" placeholder="08xxxxxxxxxx" required>
+                <div class="input-group">
+                    <label>Nomor WhatsApp Aktif *</label>
+                    <input type="tel" id="wa" placeholder="08xxxxxxxxxx" required>
+                </div>
 
-                <label>Email *</label>
-                <input type="email" id="email" required>
+                <div class="input-group">
+                    <label>Email *</label>
+                    <input type="email" id="email" placeholder="email@contoh.com" required>
+                </div>
 
-                <label>Nama lengkap koreografer</label>
-                <input type="text" id="koreografer">
+                <div class="input-group">
+                    <label>Nama lengkap koreografer</label>
+                    <input type="text" id="koreografer" placeholder="Opsional">
+                </div>
 
-                <label>Judul Tari / Nama Karya *</label>
-                <input type="text" id="judul" required>
+                <div class="input-group">
+                    <label>Judul Tari / Nama Karya *</label>
+                    <input type="text" id="judul" placeholder="Masukkan judul karya" required>
+                </div>
 
-                <label>Jenis Tari *</label>
-                <select id="jenisTari" required>
-                    <option value="">Pilih Jenis Tari</option>
-                    <option value="Tari Tradisional Kreasi">Tari Tradisional Kreasi</option>
-                    <option value="Tari Modern">Tari Modern</option>
-                    <option value="Other">Other</option>
-                </select>
+                <div class="input-group">
+                    <label>Jenis Tari *</label>
+                    <select id="jenisTari" required>
+                        <option value="">-- Pilih Jenis Tari --</option>
+                        <option value="Tari Tradisional Kreasi">Tari Tradisional Kreasi</option>
+                        <option value="Tari Modern">Tari Modern</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
 
-                <label>Latar Belakang Budaya / Daerah *</label>
-                <input type="text" id="latarBudaya" required>
+                <div class="input-group">
+                    <label>Latar Belakang Budaya / Daerah *</label>
+                    <input type="text" id="latarBudaya" placeholder="Contoh: Melayu, Dayak, Modern" required>
+                </div>
 
-                <label>Sinopsis *</label>
-                <textarea id="sinopsis" rows="3" required></textarea>
+                <div class="input-group">
+                    <label>Sinopsis *</label>
+                    <textarea id="sinopsis" rows="3" placeholder="Ceritakan sinopsis tari..." required></textarea>
+                </div>
 
-                <label>Referensi Musik Link YouTube / Video</label>
-                <input type="text" id="referensi" placeholder="'0' atau 'tidak ada'">
+                <div class="input-group">
+                    <label>Referensi Musik Link (YouTube/Video)</label>
+                    <input type="text" id="referensi" placeholder="Kosongkan atau isi '0' jika tidak ada">
+                </div>
 
-                <label>Estimasi durasi tari *</label>
-                <input type="text" id="durasi" required>
+                <div class="input-group">
+                    <label>Estimasi durasi tari *</label>
+                    <input type="text" id="durasi" placeholder="Contoh: 5 Menit" required>
+                </div>
 
-                <label>Paket yang dipilih *</label>
-                <select id="paket" required onchange="handlePaketChange()">
-                    <option value="">-- Pilih Paket --</option>
-                    <option value="Paket Dasar">Paket Dasar</option>
-                    <option value="Paket Pro">Paket Pro</option>
-                    <option value="Paket Standar">Paket Standar</option>
-                </select>
+                <div class="input-group">
+                    <label>Paket yang dipilih *</label>
+                    <select id="paket" required onchange="handlePaketChange()">
+                        <option value="">-- Pilih Paket --</option>
+                        <option value="Paket Dasar">Paket Dasar</option>
+                        <option value="Paket Pro">Paket Pro</option>
+                        <option value="Paket Standar">Paket Standar</option>
+                    </select>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn" onclick="prevStep(1)">Kembali</button>
@@ -93,25 +131,36 @@
             <!-- SECTION 3: PAKET DASAR -->
             <div class="form-step" id="step-paket-dasar" style="display:none;">
                 <h3>Detail Paket Dasar</h3>
-                <label>Tempo *</label>
-                <input type="text" class="paket-input dasar" required>
+                
+                <div class="input-group">
+                    <label>Tempo *</label>
+                    <input type="text" class="paket-input dasar" required placeholder="Contoh: 80 BPM">
+                </div>
 
-                <label>Nuansa Musik yang di inginkan *</label>
-                <select class="paket-input dasar" required>
-                    <option value="Sakral / Ritual">Sakral / Ritual</option>
-                    <option value="Ceria / Riang">Ceria / Riang</option>
-                    <option value="Dramatis">Dramatis</option>
-                    <option value="Mistis">Mistis</option>
-                </select>
+                <div class="input-group">
+                    <label>Nuansa Musik yang di inginkan *</label>
+                    <select class="paket-input dasar" required>
+                        <option value="Sakral / Ritual">Sakral / Ritual</option>
+                        <option value="Ceria / Riang">Ceria / Riang</option>
+                        <option value="Dramatis">Dramatis</option>
+                        <option value="Mistis">Mistis</option>
+                    </select>
+                </div>
 
-                <label>Rekomendasi instrumen utama (maksimal 5)</label>
-                <textarea class="paket-input dasar" rows="2"></textarea>
+                <div class="input-group">
+                    <label>Rekomendasi instrumen utama (maksimal 5)</label>
+                    <textarea class="paket-input dasar" rows="2" placeholder="Contoh: Gendang, Sape, Suling"></textarea>
+                </div>
 
-                <label>Penambahan vokal paket dasar *</label>
-                <label><input type="radio" name="vokalDasar" value="Sokalan atau terkait ata" class="paket-input dasar" required> Sokalan atau terkait ata</label>
-                <label><input type="radio" name="vokalDasar" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
-                <label><input type="radio" name="vokalDasar" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
-                <label><input type="radio" name="vokalDasar" value="Tidak menggunakan"> Tidak menggunakan</label>
+                <div class="input-group">
+                    <label>Penambahan vokal paket dasar *</label>
+                    <div class="radio-group">
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Sokalan atau terkait ata" class="paket-input dasar" required><span class="checkmark"></span> Sokalan / Terkait</label>
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Hanya nyanyian lagi"><span class="checkmark"></span> Hanya nyanyian</label>
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Nyanyian lagi dan sokalan"><span class="checkmark"></span> Nyanyian & Sokalan</label>
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Tidak menggunakan"><span class="checkmark"></span> Tidak menggunakan</label>
+                    </div>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
@@ -122,17 +171,26 @@
             <!-- SECTION 4: PAKET PRO -->
             <div class="form-step" id="step-paket-pro" style="display:none;">
                 <h3>Detail Paket Pro</h3>
-                <label>Penambahan vokal paket pro *</label>
-                <label><input type="radio" name="vokalPro" value="Sokalan atau terkait ata" class="paket-input pro" required> Sokalan atau terkait ata</label>
-                <label><input type="radio" name="vokalPro" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
-                <label><input type="radio" name="vokalPro" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
-                <label><input type="radio" name="vokalPro" value="Tidak menggunakan"> Tidak menggunakan</label>
+                
+                <div class="input-group">
+                    <label>Penambahan vokal paket pro *</label>
+                    <div class="radio-group">
+                        <label class="custom-radio"><input type="radio" name="vokalPro" value="Sokalan atau terkait ata" class="paket-input pro" required><span class="checkmark"></span> Sokalan / Terkait</label>
+                        <label class="custom-radio"><input type="radio" name="vokalPro" value="Hanya nyanyian lagi"><span class="checkmark"></span> Hanya nyanyian</label>
+                        <label class="custom-radio"><input type="radio" name="vokalPro" value="Nyanyian lagi dan sokalan"><span class="checkmark"></span> Nyanyian & Sokalan</label>
+                        <label class="custom-radio"><input type="radio" name="vokalPro" value="Tidak menggunakan"><span class="checkmark"></span> Tidak menggunakan</label>
+                    </div>
+                </div>
 
-                <label>Jelaskan urutan nuansa musik *</label>
-                <textarea class="paket-input pro" rows="4" required></textarea>
+                <div class="input-group">
+                    <label>Jelaskan urutan nuansa musik *</label>
+                    <textarea class="paket-input pro" rows="4" placeholder="Contoh: 0:00 - 0:30 (Mistis), 0:30 - 1:00 (Tegang)" required></textarea>
+                </div>
 
-                <label>Tautan video tari melalui Google Drive *</label>
-                <textarea class="paket-input pro" rows="3" required></textarea>
+                <div class="input-group">
+                    <label>Tautan video tari (Google Drive) *</label>
+                    <textarea class="paket-input pro" rows="2" placeholder="Tempelkan link di sini" required></textarea>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
@@ -143,26 +201,37 @@
             <!-- SECTION 5: PAKET STANDAR -->
             <div class="form-step" id="step-paket-standar" style="display:none;">
                 <h3>Detail Paket Standar</h3>
-                <label>Penambahan vokal paket standar *</label>
-                <label><input type="radio" name="vokalStandar" value="Sokalan atau terkait ata" class="paket-input standar" required> Sokalan atau terkait ata</label>
-                <label><input type="radio" name="vokalStandar" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
-                <label><input type="radio" name="vokalStandar" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
-                <label><input type="radio" name="vokalStandar" value="Tidak menggunakan"> Tidak menggunakan</label>
+                
+                <div class="input-group">
+                    <label>Penambahan vokal paket standar *</label>
+                    <div class="radio-group">
+                        <label class="custom-radio"><input type="radio" name="vokalStandar" value="Sokalan atau terkait ata" class="paket-input standar" required><span class="checkmark"></span> Sokalan / Terkait</label>
+                        <label class="custom-radio"><input type="radio" name="vokalStandar" value="Hanya nyanyian lagi"><span class="checkmark"></span> Hanya nyanyian</label>
+                        <label class="custom-radio"><input type="radio" name="vokalStandar" value="Nyanyian lagi dan sokalan"><span class="checkmark"></span> Nyanyian & Sokalan</label>
+                        <label class="custom-radio"><input type="radio" name="vokalStandar" value="Tidak menggunakan"><span class="checkmark"></span> Tidak menggunakan</label>
+                    </div>
+                </div>
 
-                <label>Struktur Tari *</label>
-                <select class="paket-input standar" required>
-                    <option value="Opening">Opening</option>
-                    <option value="Orientasi/Gubahan Cerita">Orientasi/Gubahan Cerita</option>
-                    <option value="Bagian Tengah">Bagian Tengah</option>
-                    <option value="Klimaks">Klimaks</option>
-                    <option value="Ending">Ending</option>
-                </select>
+                <div class="input-group">
+                    <label>Struktur Tari *</label>
+                    <select class="paket-input standar" required>
+                        <option value="Opening">Opening</option>
+                        <option value="Orientasi/Gubahan Cerita">Orientasi/Gubahan Cerita</option>
+                        <option value="Bagian Tengah">Bagian Tengah</option>
+                        <option value="Klimaks">Klimaks</option>
+                        <option value="Ending">Ending</option>
+                    </select>
+                </div>
 
-                <label>Jelaskan urutan nuansa musik *</label>
-                <textarea class="paket-input standar" rows="4" required></textarea>
+                <div class="input-group">
+                    <label>Jelaskan urutan nuansa musik *</label>
+                    <textarea class="paket-input standar" rows="4" placeholder="Jelaskan detail per bagian..." required></textarea>
+                </div>
 
-                <label>Tautan video tari melalui Google Drive *</label>
-                <textarea class="paket-input standar" rows="3" required></textarea>
+                <div class="input-group">
+                    <label>Tautan video tari (Google Drive) *</label>
+                    <textarea class="paket-input standar" rows="2" placeholder="Tempelkan link di sini" required></textarea>
+                </div>
 
                 <div class="btn-group">
                     <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
@@ -173,24 +242,39 @@
             <!-- SECTION 6: PEMBAYARAN -->
             <div class="form-step" id="step-pembayaran" style="display:none;">
                 <h3>Pembayaran & Konfirmasi</h3>
-                <label>Tulis Jumlah Keterbatasan (Total Biaya) *</label>
-                <input type="text" id="total" placeholder="Contoh: 2.000.000" required>
+                
+                <div class="input-group">
+                    <label>Tulis Jumlah Keterbatasan (Total Biaya) *</label>
+                    <input type="text" id="total" placeholder="Contoh: 2000000" required>
+                </div>
 
-                <label>Tulis jumlah terbilang (Total) *</label>
-                <input type="text" id="totalTerbilang" placeholder="Dua Juta Rupiah" required>
+                <div class="input-group">
+                    <label>Tulis jumlah terbilang (Total) *</label>
+                    <input type="text" id="totalTerbilang" placeholder="Contoh: Dua Juta Rupiah" required>
+                </div>
 
-                <label>Tulis Jumlah DP *</label>
-                <input type="text" id="dp" placeholder="Contoh: 1.000.000" required>
+                <div class="input-group">
+                    <label>Tulis Jumlah DP *</label>
+                    <input type="text" id="dp" placeholder="Contoh: 1000000" required>
+                </div>
 
-                <label>Tulis jumlah DP terbilang *</label>
-                <input type="text" id="dpTerbilang" placeholder="Satu Juta Rupiah" required>
+                <div class="input-group">
+                    <label>Tulis jumlah DP terbilang *</label>
+                    <input type="text" id="dpTerbilang" placeholder="Contoh: Satu Juta Rupiah" required>
+                </div>
 
-                <label>Unggah bukti transfer DP *</label>
-                <input type="file" id="buktiTransfer" accept="image/*,application/pdf" required>
-                <small style="color: gray;">Maksimal ukuran file 5MB.</small>
+                <div class="input-group">
+                    <label>Unggah bukti transfer DP *</label>
+                    <input type="file" id="buktiTransfer" accept="image/*,application/pdf" required>
+                    <small style="color: #888; font-size: 12px; margin-top: 5px; display: block;">Format Gambar atau PDF (Maks. 5MB)</small>
+                </div>
 
-                <div class="checkbox-group" style="margin-top: 20px;">
-                    <label><input type="checkbox" id="pernyataan" required> Saya menyatakan bahwa seluruh data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</label>
+                <div class="checkbox-group">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="pernyataan" required>
+                        <span class="checkmark-box"></span>
+                        <span class="checkbox-text">Saya menyatakan bahwa seluruh data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</span>
+                    </label>
                 </div>
 
                 <div class="btn-group">
