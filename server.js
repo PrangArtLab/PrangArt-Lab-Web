@@ -9,20 +9,17 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-app.use(cors()); // Agar GitHub Pages bisa kirim data ke sini
+app.use(cors());
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/pesan', upload.single('buktiTransfer'), async (req, res) => {
     try {
         const data = req.body;
-        
-        // Hitung Pelunasan
         const total = parseInt(data.total.replace(/[^0-9]/g, '')) || 0;
         const dp = parseInt(data.dp.replace(/[^0-9]/g, '')) || 0;
         const sisa = total - dp;
         const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka);
         
-        // Siapkan data untuk PDF
         const replacements = {
             '{{NAMA}}': data.nama,
             '{{JUDUL}}': data.judul,
@@ -30,19 +27,18 @@ app.post('/api/pesan', upload.single('buktiTransfer'), async (req, res) => {
             '{{TOTAL}}': data.total,
             '{{SISA}}': formatRupiah(sisa),
             '{{TANGGAL}}': new Date().toLocaleDateString('id-ID'),
-            '{{NOMOR}}': `KWT-${Date.now()}`
+            '{{NOMOR}}': `KWT-${Date.now()}`,
+            '{{LOGO_PATH}}': path.join(__dirname, 'assets', 'logo.png').replace(/\\/g, '/')
         };
 
-        // Fungsi Buat PDF
         async function createPDF(templateName, outputName) {
             let html = fs.readFileSync(path.join(__dirname, 'templates', templateName), 'utf8');
             for (let key in replacements) html = html.replace(new RegExp(key, 'g'), replacements[key]);
-            
             const browser = await puppeteer.launch({ headless: 'new' });
             const page = await browser.newPage();
             await page.setContent(html, { waitUntil: 'networkidle0' });
             const pdfPath = path.join(__dirname, 'uploads', outputName);
-            await page.pdf({ path: pdfPath, format: 'A4' });
+            await page.pdf({ path: pdfPath, format: 'A4', printBackground: true });
             await browser.close();
             return pdfPath;
         }
@@ -50,7 +46,6 @@ app.post('/api/pesan', upload.single('buktiTransfer'), async (req, res) => {
         const pdfKuitansi = await createPDF('kuitansi.html', `Kuitansi-${data.nama}.pdf`);
         const pdfInvoice = await createPDF('invoice.html', `Invoice-${data.nama}.pdf`);
 
-        // Kirim Email
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
@@ -63,7 +58,6 @@ app.post('/api/pesan', upload.single('buktiTransfer'), async (req, res) => {
             attachments: [{ path: pdfKuitansi }, { path: pdfInvoice }]
         });
 
-        // Kirim WhatsApp (WAHA)
         let waNumber = data.wa.replace(/\D/g, '');
         if (waNumber.startsWith('0')) waNumber = '62' + waNumber.substring(1);
         const pdfBase64 = fs.readFileSync(pdfKuitansi).toString('base64');
@@ -84,4 +78,4 @@ app.post('/api/pesan', upload.single('buktiTransfer'), async (req, res) => {
     }
 });
 
-app.listen(5000, () => console.log('Backend berjalan di port 5000'));
+app.listen(5000, () => console.log('Backend berjalan di http://localhost:5000'));
