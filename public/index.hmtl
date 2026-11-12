@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light"> <!-- Mencegah Dark Mode aneh -->
+    <title>Formulir Pemesanan - PrangArt Studios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="header-form">
+            <h1>PrangArt Studios</h1>
+            <p>Formulir Pemesanan Produksi Musik Tari</p>
+            <div id="progress-bar">Bagian 1 dari 4</div>
+        </div>
+
+        <form id="orderForm">
+            <!-- SECTION 1: PEMBUKA -->
+            <div class="form-step active" id="step-1">
+                <h3>Selamat Datang</h3>
+                <p>Apakah Anda tertarik/membawa proses produksi musik Anda menggunakan karya tari sama dengan PrangArt Studios?</p>
+                <label><input type="radio" name="tertarik" value="Ya" required onchange="toggleSection('ya')"> Ya</label>
+                <label><input type="radio" name="tertarik" value="Tidak" onchange="toggleSection('tidak')"> Tidak</label>
+                
+                <div id="pesan-tidak" style="display:none; color:#d32f2f; margin-top:15px; font-weight:bold;">
+                    Terima kasih atas waktunya. Formulir berhenti di sini.
+                </div>
+
+                <div class="btn-group" id="btn-step1" style="display:none;">
+                    <button type="button" class="next-btn" onclick="validateAndNext(2)">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2: DATA DIRI & KARYA -->
+            <div class="form-step" id="step-2" style="display:none;">
+                <h3>Data Pemesan & Karya</h3>
+                <label>Nama Lengkap *</label>
+                <input type="text" id="nama" required>
+
+                <label>Nama Sanggar / Komunitas / Instansi / Individu</label>
+                <input type="text" id="sanggar">
+
+                <label>Kota / Provinsi *</label>
+                <input type="text" id="kota" required>
+
+                <label>Nomor WhatsApp Aktif *</label>
+                <input type="tel" id="wa" placeholder="08xxxxxxxxxx" required>
+
+                <label>Email *</label>
+                <input type="email" id="email" required>
+
+                <label>Nama lengkap koreografer</label>
+                <input type="text" id="koreografer">
+
+                <label>Judul Tari / Nama Karya *</label>
+                <input type="text" id="judul" required>
+
+                <label>Jenis Tari *</label>
+                <select id="jenisTari" required>
+                    <option value="">Pilih Jenis Tari</option>
+                    <option value="Tari Tradisional Kreasi">Tari Tradisional Kreasi</option>
+                    <option value="Tari Modern">Tari Modern</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label>Latar Belakang Budaya / Daerah *</label>
+                <input type="text" id="latarBudaya" required>
+
+                <label>Sinopsis *</label>
+                <textarea id="sinopsis" rows="3" required></textarea>
+
+                <label>Referensi Musik Link YouTube / Video</label>
+                <input type="text" id="referensi" placeholder="'0' atau 'tidak ada'">
+
+                <label>Estimasi durasi tari *</label>
+                <input type="text" id="durasi" required>
+
+                <label>Paket yang dipilih *</label>
+                <select id="paket" required onchange="handlePaketChange()">
+                    <option value="">-- Pilih Paket --</option>
+                    <option value="Paket Dasar">Paket Dasar</option>
+                    <option value="Paket Pro">Paket Pro</option>
+                    <option value="Paket Standar">Paket Standar</option>
+                </select>
+
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(1)">Kembali</button>
+                    <button type="button" class="next-btn" id="btn-lanjut-step2" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 3: PAKET DASAR -->
+            <div class="form-step" id="step-paket-dasar" style="display:none;">
+                <h3>Detail Paket Dasar</h3>
+                <label>Tempo *</label>
+                <input type="text" class="paket-input dasar" required>
+
+                <label>Nuansa Musik yang di inginkan *</label>
+                <select class="paket-input dasar" required>
+                    <option value="Sakral / Ritual">Sakral / Ritual</option>
+                    <option value="Ceria / Riang">Ceria / Riang</option>
+                    <option value="Dramatis">Dramatis</option>
+                    <option value="Mistis">Mistis</option>
+                </select>
+
+                <label>Rekomendasi instrumen utama (maksimal 5)</label>
+                <textarea class="paket-input dasar" rows="2"></textarea>
+
+                <label>Penambahan vokal paket dasar *</label>
+                <label><input type="radio" name="vokalDasar" value="Sokalan atau terkait ata" class="paket-input dasar" required> Sokalan atau terkait ata</label>
+                <label><input type="radio" name="vokalDasar" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
+                <label><input type="radio" name="vokalDasar" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
+                <label><input type="radio" name="vokalDasar" value="Tidak menggunakan"> Tidak menggunakan</label>
+
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 4: PAKET PRO -->
+            <div class="form-step" id="step-paket-pro" style="display:none;">
+                <h3>Detail Paket Pro</h3>
+                <label>Penambahan vokal paket pro *</label>
+                <label><input type="radio" name="vokalPro" value="Sokalan atau terkait ata" class="paket-input pro" required> Sokalan atau terkait ata</label>
+                <label><input type="radio" name="vokalPro" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
+                <label><input type="radio" name="vokalPro" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
+                <label><input type="radio" name="vokalPro" value="Tidak menggunakan"> Tidak menggunakan</label>
+
+                <label>Jelaskan urutan nuansa musik *</label>
+                <textarea class="paket-input pro" rows="4" required></textarea>
+
+                <label>Tautan video tari melalui Google Drive *</label>
+                <textarea class="paket-input pro" rows="3" required></textarea>
+
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 5: PAKET STANDAR -->
+            <div class="form-step" id="step-paket-standar" style="display:none;">
+                <h3>Detail Paket Standar</h3>
+                <label>Penambahan vokal paket standar *</label>
+                <label><input type="radio" name="vokalStandar" value="Sokalan atau terkait ata" class="paket-input standar" required> Sokalan atau terkait ata</label>
+                <label><input type="radio" name="vokalStandar" value="Hanya nyanyian lagi"> Hanya nyanyian lagi</label>
+                <label><input type="radio" name="vokalStandar" value="Nyanyian lagi dan sokalan"> Nyanyian lagi dan sokalan</label>
+                <label><input type="radio" name="vokalStandar" value="Tidak menggunakan"> Tidak menggunakan</label>
+
+                <label>Struktur Tari *</label>
+                <select class="paket-input standar" required>
+                    <option value="Opening">Opening</option>
+                    <option value="Orientasi/Gubahan Cerita">Orientasi/Gubahan Cerita</option>
+                    <option value="Bagian Tengah">Bagian Tengah</option>
+                    <option value="Klimaks">Klimaks</option>
+                    <option value="Ending">Ending</option>
+                </select>
+
+                <label>Jelaskan urutan nuansa musik *</label>
+                <textarea class="paket-input standar" rows="4" required></textarea>
+
+                <label>Tautan video tari melalui Google Drive *</label>
+                <textarea class="paket-input standar" rows="3" required></textarea>
+
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 6: PEMBAYARAN -->
+            <div class="form-step" id="step-pembayaran" style="display:none;">
+                <h3>Pembayaran & Konfirmasi</h3>
+                <label>Tulis Jumlah Keterbatasan (Total Biaya) *</label>
+                <input type="text" id="total" placeholder="Contoh: 2.000.000" required>
+
+                <label>Tulis jumlah terbilang (Total) *</label>
+                <input type="text" id="totalTerbilang" placeholder="Dua Juta Rupiah" required>
+
+                <label>Tulis Jumlah DP *</label>
+                <input type="text" id="dp" placeholder="Contoh: 1.000.000" required>
+
+                <label>Tulis jumlah DP terbilang *</label>
+                <input type="text" id="dpTerbilang" placeholder="Satu Juta Rupiah" required>
+
+                <label>Unggah bukti transfer DP *</label>
+                <input type="file" id="buktiTransfer" accept="image/*,application/pdf" required>
+                <small style="color: gray;">Maksimal ukuran file 5MB.</small>
+
+                <div class="checkbox-group" style="margin-top: 20px;">
+                    <label><input type="checkbox" id="pernyataan" required> Saya menyatakan bahwa seluruh data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</label>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="submit" class="submit-btn">Kirim Formulir</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
