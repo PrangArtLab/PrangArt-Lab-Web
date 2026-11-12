@@ -15,7 +15,6 @@
             <p>Formulir Pemesanan Produksi Musik Tari</p>
             <div id="progress-bar">Bagian 1 dari 4</div>
         </div>
-
         <form id="orderForm">
             <!-- SECTION 1 -->
             <div class="form-step active" id="step-1">
@@ -30,7 +29,6 @@
                     <button type="button" class="next-btn" onclick="validateAndNext(2)">Lanjut</button>
                 </div>
             </div>
-
             <!-- SECTION 2 -->
             <div class="form-step" id="step-2" style="display:none;">
                 <h3>Data Pemesan & Karya</h3>
@@ -67,7 +65,6 @@
                     <button type="button" class="next-btn" id="btn-lanjut-step2" onclick="validateAndNext('pembayaran')">Lanjut</button>
                 </div>
             </div>
-
             <!-- SECTION PAKET DASAR -->
             <div class="form-step" id="step-paket-dasar" style="display:none;">
                 <h3>Detail Paket Dasar</h3>
@@ -84,7 +81,6 @@
                     <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
                 </div>
             </div>
-
             <!-- SECTION PAKET PRO -->
             <div class="form-step" id="step-paket-pro" style="display:none;">
                 <h3>Detail Paket Pro</h3>
@@ -94,7 +90,6 @@
                     <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
                 </div>
             </div>
-
             <!-- SECTION PAKET STANDAR -->
             <div class="form-step" id="step-paket-standar" style="display:none;">
                 <h3>Detail Paket Standar</h3>
@@ -104,7 +99,6 @@
                     <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
                 </div>
             </div>
-
             <!-- SECTION PEMBAYARAN -->
             <div class="form-step" id="step-pembayaran" style="display:none;">
                 <h3>Pembayaran & Konfirmasi</h3>
