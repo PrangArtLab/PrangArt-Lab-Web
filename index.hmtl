@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Formulir Pemesanan - PrangArt Studios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="header-form">
+            <h1>PrangArt Studios</h1>
+            <p>Formulir Pemesanan Produksi Musik Tari</p>
+            <div id="progress-bar">Bagian 1 dari 4</div>
+        </div>
+
+        <form id="orderForm">
+            <!-- SECTION 1 -->
+            <div class="form-step active" id="step-1">
+                <h3>Selamat Datang</h3>
+                <p class="desc-text">Apakah Anda tertarik/membawa proses produksi musik Anda menggunakan karya tari sama dengan PrangArt Studios?</p>
+                <div class="radio-group">
+                    <label class="custom-radio"><input type="radio" name="tertarik" value="Ya" required onchange="toggleSection('ya')"><span class="checkmark"></span> Ya, Tertarik</label>
+                    <label class="custom-radio"><input type="radio" name="tertarik" value="Tidak" onchange="toggleSection('tidak')"><span class="checkmark"></span> Tidak</label>
+                </div>
+                <div id="pesan-tidak" style="display:none; color:#d32f2f; margin-top:15px; font-weight:500;">Terima kasih atas waktunya. Formulir berhenti di sini.</div>
+                <div class="btn-group" id="btn-step1" style="display:none;">
+                    <button type="button" class="next-btn" onclick="validateAndNext(2)">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="form-step" id="step-2" style="display:none;">
+                <h3>Data Pemesan & Karya</h3>
+                <div class="input-group"><label>Nama Lengkap *</label><input type="text" id="nama" required></div>
+                <div class="input-group"><label>Nama Sanggar / Komunitas</label><input type="text" id="sanggar"></div>
+                <div class="input-group"><label>Kota / Provinsi *</label><input type="text" id="kota" required></div>
+                <div class="input-group"><label>Nomor WhatsApp Aktif *</label><input type="tel" id="wa" required></div>
+                <div class="input-group"><label>Email *</label><input type="email" id="email" required></div>
+                <div class="input-group"><label>Nama Koreografer</label><input type="text" id="koreografer"></div>
+                <div class="input-group"><label>Judul Tari / Nama Karya *</label><input type="text" id="judul" required></div>
+                <div class="input-group">
+                    <label>Jenis Tari *</label>
+                    <select id="jenisTari" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="Tari Tradisional Kreasi">Tari Tradisional Kreasi</option>
+                        <option value="Tari Modern">Tari Modern</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group"><label>Latar Belakang Budaya *</label><input type="text" id="latarBudaya" required></div>
+                <div class="input-group"><label>Sinopsis *</label><textarea id="sinopsis" rows="3" required></textarea></div>
+                <div class="input-group"><label>Estimasi durasi tari *</label><input type="text" id="durasi" required></div>
+                <div class="input-group">
+                    <label>Paket yang dipilih *</label>
+                    <select id="paket" required onchange="handlePaketChange()">
+                        <option value="">-- Pilih Paket --</option>
+                        <option value="Paket Dasar">Paket Dasar</option>
+                        <option value="Paket Pro">Paket Pro</option>
+                        <option value="Paket Standar">Paket Standar</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(1)">Kembali</button>
+                    <button type="button" class="next-btn" id="btn-lanjut-step2" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION PAKET DASAR -->
+            <div class="form-step" id="step-paket-dasar" style="display:none;">
+                <h3>Detail Paket Dasar</h3>
+                <div class="input-group"><label>Tempo *</label><input type="text" class="paket-input dasar" required></div>
+                <div class="input-group">
+                    <label>Penambahan vokal *</label>
+                    <div class="radio-group">
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Sokalan" class="paket-input dasar" required><span class="checkmark"></span> Sokalan</label>
+                        <label class="custom-radio"><input type="radio" name="vokalDasar" value="Tidak"><span class="checkmark"></span> Tidak</label>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION PAKET PRO -->
+            <div class="form-step" id="step-paket-pro" style="display:none;">
+                <h3>Detail Paket Pro</h3>
+                <div class="input-group"><label>Jelaskan urutan nuansa *</label><textarea class="paket-input pro" rows="3" required></textarea></div>
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION PAKET STANDAR -->
+            <div class="form-step" id="step-paket-standar" style="display:none;">
+                <h3>Detail Paket Standar</h3>
+                <div class="input-group"><label>Struktur Tari *</label><input type="text" class="paket-input standar" required></div>
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="button" class="next-btn" onclick="validateAndNext('pembayaran')">Lanjut</button>
+                </div>
+            </div>
+
+            <!-- SECTION PEMBAYARAN -->
+            <div class="form-step" id="step-pembayaran" style="display:none;">
+                <h3>Pembayaran & Konfirmasi</h3>
+                <div class="input-group"><label>Total Biaya *</label><input type="text" id="total" required></div>
+                <div class="input-group"><label>Jumlah DP *</label><input type="text" id="dp" required></div>
+                <div class="input-group">
+                    <label>Unggah bukti transfer *</label>
+                    <input type="file" id="buktiTransfer" required>
+                </div>
+                <div class="checkbox-group">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="pernyataan" required>
+                        <span class="checkmark-box"></span>
+                        <span class="checkbox-text">Data yang saya isi adalah benar.</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="prev-btn" onclick="prevStep(2)">Kembali</button>
+                    <button type="submit" class="submit-btn">Kirim Formulir</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
